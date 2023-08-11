@@ -28,12 +28,13 @@ let shorturld = 1;
 app.post("/api/shorturl", function (req, res) {
   const longurl = req.body.url;
   if (!validurl.isUri(longurl)) {
-    return res.status(400).json({ error: "invalid url" });
+    return res.status(400).json({ error: 'invalid url' });
   }
-  const shorturl = `${req.protocol}://${req.get('host')}/api/shorturl/${shorturld}`;
+  
+  const shorturl = createShortUrl(shorturld);
   url[shorturld] = longurl;
   shorturld++;
-  res.json({ shorturl: shorturl, originalurl: longurl });
+  res.json({ short_url: shorturl, orginal_url: longurl });
 });
 
 app.get("/api/shorturl/:id", function (req, res) {
@@ -45,6 +46,10 @@ app.get("/api/shorturl/:id", function (req, res) {
     return res.status(404).json({ error: "url not found" });
   }
 });
+
+function createShortUrl(id) {
+  return `${process.env.BASE_URL || 'http://localhost'}:${port}/api/shorturl/${id}`;
+}
 
 app.listen(port, function() {
   console.log(`Listening on port ${port}`);
