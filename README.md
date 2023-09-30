@@ -49,6 +49,3 @@ This project uses MongoDB to store URL data. You can manage your MongoDB data us
 
 
 
-Make sure to replace placeholders like `https://www.example.com/your/long/url`, the MongoDB connection details, and the project's GitHub repository URL with your specific information.This will launch the URL shortening service, and it will be available at http://localhost:3000 by default.Shorten a URL:Send a POST request to http://localhost:3000/api/shorturl with a JSON body containing the long URL:{
-  "longUrl": "https://www.example.com/your/long/url"
-}The response will contain the shortened URL.Access a shortened URL:Simply visit the shortened URL in your web browser, and you will be redirected to the original long URL.
