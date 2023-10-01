@@ -22,19 +22,18 @@ app.get('/api/hello', function (req, res) {
   res.json({ greeting: 'hello API' });
 });
 
-const url = {};
-let shorturld = 1;
+
+let shorturlid = 1;
 
 app.post("/api/shorturl", async function (req, res) {
   const longurl = req.body.url;
   if (!validurl.isUri(longurl)) {
     return res.status(400).json({ error: 'invalid url' });
   }
+  const shorturl = createShortUrl(shorturlid);
+  const urlData = { urlid: shorturlid, shorturl: shorturl, orginal_url: longurl };
+  shorturlid++; // Increment after creating the short URL
 
-  const shorturl = createShortUrl(shorturld);
-  url[shorturld] = longurl;
-  shorturld++;
-  const urlData = { urlid: shorturld, shorturl: shorturl, orginal_url: longurl }
   const collection = await db.get("urls").collection("urldata")
   collection.insertOne(urlData, (err) => {
     if (err) {
@@ -47,9 +46,11 @@ app.post("/api/shorturl", async function (req, res) {
 
 app.get("/api/shorturl/:id", async function (req, res) {
   const id = parseInt(req.params.id);
+  
   const data = await db.get("urls").collection("urldata").findOne({urlid:id})
+ 
 
-  if (data.hasOwnProperty(id)) {
+  if (data) {
     return res.redirect(301,data.orginal_url);
   } else {
     return res.status(404).json({ error: "url not found" });
