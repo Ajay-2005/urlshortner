@@ -47,5 +47,19 @@ Before you begin, ensure you have met the following requirements:
 
 This project uses MongoDB to store URL data. You can manage your MongoDB data using the MongoDB shell or a GUI tool like MongoDB Compass.
 
+##Using Docker
+You can also run this application in a Docker container. To do so, follow these steps:
 
+Build the Docker image:
+
+ ```bash
+docker build -t your-image-name .
+   ```
+Replace your-image-name with a suitable name for your Docker image.
+
+Run the Docker container:
+ ```bash
+docker run -d -p 3000:3000 your-image-name
+  ```
+Your application should now be accessible at http://localhost:3000 within the Docker container.
 
