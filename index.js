@@ -61,9 +61,10 @@ function createShortUrl(id) {
   return `${process.env.BASE_URL || 'http://localhost'}:${port}/api/shorturl/${id}`;
 }
 
-app.listen(port, function () {
+app.listen(port, '0.0.0.0', function () {
   console.log(`Listening on port ${port}`);
 });
+
 db.connect((err) => {
   if (err) {
     console.log("database connection error")
